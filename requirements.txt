@@ -1,0 +1,4 @@
+Flask==2.3.3
+azure-storage-queue==12.5.1
+flask_swagger_ui
+pytest

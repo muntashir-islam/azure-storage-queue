@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-queue-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azure-queue-app
+  template:
+    metadata:
+      labels:
+        app: azure-queue-app
+    spec:
+      containers:
+      - name: azure-queue-app
+        image: muntashir/azure-storage-queue:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: AZURE_QUEUE_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: azure-storage-secrets
+              key: connectionString
+        - name: AZURE_QUEUE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: azure-storage-config
+              key: queueName
